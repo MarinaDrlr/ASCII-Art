@@ -32,7 +32,7 @@ func main() {
 	// Generate ASCII art
 	asciiArt, err := funcs.GenerateASCIIArt(normalizedInput, banner)
 	if err != nil {
-		fmt.Fprintln(os.Stderr, err)
+		fmt.Fprintln(os.Stderr, "Error:", err)
 		os.Exit(1)
 	}
 
@@ -44,5 +44,4 @@ func main() {
 
 	// Print the generated ASCII art to the console
 	funcs.DisplayASCIIArt(asciiArt)
-
 }

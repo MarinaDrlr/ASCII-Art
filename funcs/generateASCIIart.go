@@ -32,12 +32,12 @@ func GenerateASCIIArt(input string, banner map[rune][]string) ([]string, error) 
 
 		asciiArt, exists := banner[char]
 		if !exists {
-			return nil, fmt.Errorf("Error: Character '%c' is missing from the font definition", char)
+			return nil, fmt.Errorf("character '%c' is missing from the font definition", char)
 		}
 
 		// Must be exactly 8 lines to prevent index out of range errors
 		if len(asciiArt) != 8 {
-			return nil, fmt.Errorf("Error: Character '%c' has an invalid ASCII art format", char)
+			return nil, fmt.Errorf("invalid ASCII art format: character '%c' has incorrect line count", char)
 		}
 
 		for i, artLine := range asciiArt {
