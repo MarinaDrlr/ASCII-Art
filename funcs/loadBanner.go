@@ -9,15 +9,16 @@ import (
 // LoadBanner reads the font file and maps characters to ASCII art
 func LoadBanner(font string) (map[rune][]string, error) {
 	filename := "fonts/" + font + ".txt"
+	cleanName := font + ".txt" // Σταθερό όνομα για τα error messages
 
 	// Check if the file exists
 	if _, err := os.Stat(filename); os.IsNotExist(err) {
-		return nil, fmt.Errorf("font file \"%s\" not found", font)
+		return nil, fmt.Errorf("Banner file \"%s\" does not exist.", cleanName)
 	}
 
 	file, err := os.Open(filename)
 	if err != nil {
-		return nil, fmt.Errorf("could not open banner file \"%s\"", filename)
+		return nil, fmt.Errorf("Could not open banner file \"%s\".", cleanName)
 	}
 	defer file.Close()
 
@@ -36,7 +37,7 @@ func LoadBanner(font string) (map[rune][]string, error) {
 			if len(charLines) > 0 {
 				// Check if the character has exactly 8 lines
 				if len(charLines) != 8 {
-					return nil, fmt.Errorf("banner file \"%s\" is corrupted", filename)
+					return nil, fmt.Errorf("Banner file \"%s\" is corrupted.", cleanName)
 				}
 				bannerMap[currentChar] = append([]string{}, charLines...)
 				currentChar++
@@ -50,16 +51,16 @@ func LoadBanner(font string) (map[rune][]string, error) {
 
 	// Final check: Last character must also have exactly 8 lines
 	if len(charLines) > 0 && len(charLines) != 8 {
-		return nil, fmt.Errorf("banner file \"%s\" is corrupted", filename)
+		return nil, fmt.Errorf("Banner file \"%s\" is corrupted.", cleanName)
 	}
 
 	// Check if the file was completely empty
 	if linesRead == 0 {
-		return nil, fmt.Errorf("banner file \"%s\" is empty", filename)
+		return nil, fmt.Errorf("Banner file \"%s\" is empty.", cleanName)
 	}
 
 	if err := scanner.Err(); err != nil {
-		return nil, fmt.Errorf("failed to read banner file \"%s\": %s", filename, err)
+		return nil, fmt.Errorf("Failed to read banner file \"%s\": %s", cleanName, err)
 	}
 
 	return bannerMap, nil

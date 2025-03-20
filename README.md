@@ -129,17 +129,22 @@ go run . "Hello \"World\" \|" | cat -e
 - If no input is provided:
   ```sh
   go run .
-  Error: No input provided.
+  Error: no input provided.
   ```
 - If the font file is missing:
   ```sh
-  go run . "Test" "missingfont"
-  Error: Banner font "missingfont" does not exist.
+  go run . "hello" missingfont
+  Error: banner file "missingfont.txt" does not exist
   ```
-- If the font file is empty or malformed:
+- If the font file is empty:
   ```sh
-  go run . "Test" "corruptfont"
-  Error: Banner file "corruptfont.txt" is empty.
+  go run . "hello" empty
+  Error: banner file "empty.txt" is empty.
+  ```
+  If the font file is malformed:
+  ```sh
+  go run . "hello" broken
+  Error: banner file "broken.txt" is corrupted.
   ```
 
 ## Testing
@@ -147,12 +152,8 @@ go run . "Hello \"World\" \|" | cat -e
 Automated tests are included to validate the ASCII rendering. To run tests:
 
 ```sh
-go test ./tests
+go test
 ```
-
-## License
-
-This project is open-source and available under the MIT License.
 
 ## License
 
